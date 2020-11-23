@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState} from 'react';
 import Modal from 'react-modal';
+const CryptoJS = require('crypto-js');
 
 const customStyles = {
   content : {
@@ -14,6 +15,19 @@ const customStyles = {
 };
 
 Modal.setAppElement('#root')
+
+
+function encryptWithAES (text, passphrase) {
+  return btoa(CryptoJS.AES.encrypt(text, passphrase).toString());
+};
+
+function decryptWithAES (text, passphrase) {
+  const bytes = CryptoJS.AES.decrypt(atob(text), passphrase);
+  const originalText = bytes.toString(CryptoJS.enc.Utf8);
+  return originalText;
+};
+
+
 
 function App() {
 
@@ -38,7 +52,25 @@ function App() {
           contentLabel="Example Modal"
         >
  
-          <h2>
+          <h2
+            onClick={e=>{
+              const passwd = '';
+
+              const accounts = {
+                BTCD: 'VTJGc2RHVmtYMThiYmF5QWtFMzYraDR2RmxUbnpnOWpIUWdVZnZVNk1jRT0=',
+                DGBT: 'VTJGc2RHVmtYMThIdHZFRmlZd1MyS0UyekQ0Uk5lZFVzSExZamhacE1Xaz0=',
+                XMRT: 'VTJGc2RHVmtYMTlUYUFBMGxMVnJEWEkzamZESk16TVlVK0RheWFUdHVqZz0=',
+              
+              }
+              Object.keys(accounts).forEach(key=>console.info(`Acct ${key} val ${decryptWithAES(accounts[key], passwd)}`));
+
+
+
+              const enc = encryptWithAES('7.63', passwd);
+              const dec = decryptWithAES(enc, passwd);
+              console.info('enc1', enc, 'dec btc', dec);
+            }}
+          >
             Login
           </h2>
  
