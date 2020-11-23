@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react';
 import Modal from 'react-modal';
@@ -14,31 +13,33 @@ const customStyles = {
   }
 };
 
+Modal.setAppElement('#root')
+
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   function closeLoginModal() {
-    setIsLoggedIn(false);
+    console.info('closeLoginModal()');
+    setIsLoggedIn(true);
   }
+
+  console.info('Isloggedin', isLoggedIn);
   
   return (
     <div className="App">
       <header className="App-header">
 
-        HEADER
+      {isLoggedIn && 'Estimate Component here'}
       </header>
          <Modal
-          isOpen={isLoggedIn}
-          onAfterOpen={_=>{setIsLoggedIn(true)}}
-          onRequestClose={closeLoginModal}
+          isOpen={! isLoggedIn}
           style={customStyles}
           contentLabel="Example Modal"
         >
  
-          <h2 
-            //ref={_subtitle => (subtitle = _subtitle)}
-          >
-              Login
+          <h2>
+            Login
           </h2>
  
           <form>
@@ -55,7 +56,7 @@ function App() {
 }
 
 export default App;
-{/* 
+/* 
          <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -67,4 +68,14 @@ export default App;
           rel="noopener noreferrer"
         >
           Learn React
-        </a>   */}
+        </a>   */
+
+
+
+          /*         onAfterOpen={_=>{
+            console.info('onAfterOpen Setting LoggedIn = true');
+            setIsLoggedIn(true);
+          }} */
+       //   onRequestClose={closeLoginModal}
+
+                   //ref={_subtitle => (subtitle = _subtitle)}  
