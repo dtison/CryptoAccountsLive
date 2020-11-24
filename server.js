@@ -1,3 +1,7 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+ 
 const axios = require('axios');
 const dotenv = require("dotenv");
 
@@ -84,75 +88,32 @@ const accounts = [
 
 ];
   
+accounts.length = 2;
+
 let prices = [];
 
-updatePrices();
-setTimeout(updatePrices, 60000);
+const hourly = 60 * 60000;
+const every10Seconds = 10000;
+const every30Seconds = 30000;
+
+setTimeout(updatePrices, 500);
+setInterval(updatePrices, every30Seconds);
 
 function updatePrices() {
-  const index = 0;
-  const account = accounts[index];
-  const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${account.symbol}&CMC_PRO_API_KEY=f1920a9b-6a47-4217-85ff-1f9cae952027`;
-  console.info('Axios getting', url);
-  axios.get(url)
-    .then(response => {
 
-      accounts[index].price = response.data.data[account.symbol].quote.USD;
-      accounts[index].qty = 0;
-      console.info('axios response was', response.data.data[account.symbol].quote.USD);
-    })
-    .catch(error=>{console.info('Got error', error);})
-
-
-
-/*   setTimeout(_=>{
-    console.info('Displaying it all');
-    axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC&CMC_PRO_API_KEY=f1920a9b-6a47-4217-85ff-1f9cae952027')
+  accounts.forEach(account => {
+    const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${account.symbol}&CMC_PRO_API_KEY=f1920a9b-6a47-4217-85ff-1f9cae952027`;
+    console.info('Axios getting', url);
+    axios.get(url)
       .then(response => {
-        console.info('axios response was', response);
+        account.price = response.data.data[account.symbol].quote.USD.price;
+        console.info('after updating, account is', account);
       })
-
-    accounts.forEach(coin=>{
-      // axios.get('/user?ID=12345')
-      // .then(function (response) {
-      //   // handle success
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //   // handle error
-      //   console.log(error);
-      // }) 
-     // console.info(`${coin.name} ${decryptWithAES(coin.value, passwd)}`));
-    });
-  }, 1000);
- */
+      .catch(error=>{console.info('Got error', error);});
+  });
 
 }
 
-
-
-/* 
-const getData = () => {
-    var productList = [];
-
-    let isChange = false;
-    if (Math.floor(Math.random() * 3) === 0) {
-        console.info('DATA WILL CHANGE');
-        isChange = true;
-    }
-    for (let i = 0; i < 1; i++) {
-//        productList.push({ Id: i + 1, Title: `Product ${i + 1}`, Price: Math.floor(Math.random() * 100000) + 5000 });
-        productList.push({ Id: i + 1, Title: `Product ${i + 1}`, Price: (isChange ? Math.floor(Math.random() * 100000) + 5000 : 10.00) });
-
-    }
-    return productList;
-} */
-
-
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
- 
 
 const app = express();
 
@@ -187,3 +148,60 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log(`The server is listening on port ${PORT}`));
+
+
+
+/*   const index = 0;
+  const account = accounts[index];
+  const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${account.symbol}&CMC_PRO_API_KEY=f1920a9b-6a47-4217-85ff-1f9cae952027`;
+  console.info('Axios getting', url);
+  axios.get(url)
+    .then(response => {
+
+      accounts[index].price = response.data.data[account.symbol].quote.USD;
+      accounts[index].qty = 0;
+      console.info('axios response was', response.data.data[account.symbol].quote.USD);
+    })
+    .catch(error=>{console.info('Got error', error);}) */
+
+
+
+/*   setTimeout(_=>{
+    console.info('Displaying it all');
+    axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC&CMC_PRO_API_KEY=f1920a9b-6a47-4217-85ff-1f9cae952027')
+      .then(response => {
+        console.info('axios response was', response);
+      })
+
+    accounts.forEach(coin=>{
+      // axios.get('/user?ID=12345')
+      // .then(function (response) {
+      //   // handle success
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   // handle error
+      //   console.log(error);
+      // }) 
+     // console.info(`${coin.name} ${decryptWithAES(coin.value, passwd)}`));
+    });
+  }, 1000);
+ */
+
+
+/* 
+const getData = () => {
+    var productList = [];
+
+    let isChange = false;
+    if (Math.floor(Math.random() * 3) === 0) {
+        console.info('DATA WILL CHANGE');
+        isChange = true;
+    }
+    for (let i = 0; i < 1; i++) {
+//        productList.push({ Id: i + 1, Title: `Product ${i + 1}`, Price: Math.floor(Math.random() * 100000) + 5000 });
+        productList.push({ Id: i + 1, Title: `Product ${i + 1}`, Price: (isChange ? Math.floor(Math.random() * 100000) + 5000 : 10.00) });
+
+    }
+    return productList;
+} */

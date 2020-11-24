@@ -3,8 +3,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import Modal from 'react-modal';
 
 import DeepEqual from 'deep-equal';
-
-const CryptoJS = require('crypto-js');
+import AES from './lib/AES';
 
 const customStyles = {
   content : {
@@ -20,15 +19,6 @@ const customStyles = {
 Modal.setAppElement('#root')
 
 
-function encryptWithAES (text, passphrase) {
-  return btoa(CryptoJS.AES.encrypt(text, passphrase).toString());
-};
-
-function decryptWithAES (text, passphrase) {
-  const bytes = CryptoJS.AES.decrypt(atob(text), passphrase);
-  const originalText = bytes.toString(CryptoJS.enc.Utf8);
-  return originalText;
-};
 
 function App() {
 
@@ -87,11 +77,11 @@ function App() {
           <h2
             onClick={e=>{
               const passwd = process.env.REACT_APP_PASSWORD;
+// TODO:  Loop thru SSE data?
+   //           accounts.forEach(coin=>console.info(`${coin.name} ${AES.decryptFromBase64(coin.value, passwd)}`));
 
-              accounts.forEach(coin=>console.info(`${coin.name} ${decryptWithAES(coin.value, passwd)}`));
-
-              const enc = encryptWithAES('0.0', passwd);
-              const dec = decryptWithAES(enc, passwd);
+              const enc = AES.encryptToBase64('0.0', passwd);
+              const dec = AES.decryptFromBase64(enc, passwd);
               console.info('enc1', enc, 'latest v', dec);
             }}
           >
