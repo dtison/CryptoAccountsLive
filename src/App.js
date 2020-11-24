@@ -18,7 +18,7 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
-const accounts = [
+const accountsData = [
   {
     name: 'BTC',
     id: 'bitcoin',
@@ -103,7 +103,7 @@ const accounts = [
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [sseData, setSSEData] = useState([]);
+  const [accounts, setAccounts] = useState(accountsData);
   const sseDataRef = useRef(null);
 
   useEffect(_ => {
@@ -129,9 +129,11 @@ function App() {
           'vs_currencies': 'usd'
         }}
       ).then(response => {
-        accounts.forEach(account => {
+        const newAccounts = accounts;
+        newAccounts.forEach(account => {
           account.price = response.data[account.id].usd;
-        })
+        });
+        setAccounts(newAccounts);
 
       })
       .catch(error=>{console.info('Got API error', error);});
