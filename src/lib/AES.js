@@ -13,7 +13,10 @@ function AES() {
     return originalText;
   };
   
-
-
+  return Object.freeze({
+    encryptToBase64: encryptToBase64,
+    decryptFromBase64: decryptFromBase64,
+  });
 
 }
+export default new AES();

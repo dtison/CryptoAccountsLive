@@ -1,10 +1,9 @@
 import './App.css';
 import React, {useState, useEffect, useRef} from 'react';
 import Modal from 'react-modal';
-
-import DeepEqual from 'deep-equal';
 import AES from './lib/AES';
 import axios from 'axios';
+import Estimate from './components/Estimate';
 
 const customStyles = {
   content : {
@@ -108,9 +107,8 @@ function App() {
   const sseDataRef = useRef(null);
 
   useEffect(_ => {
-      updatePrices();
-          // setInterval() for every 10 secs??
-
+    updatePrices();
+    setInterval(updatePrices, 20000);
   }, []);
  
 
@@ -125,15 +123,19 @@ function App() {
   
       urlWithAxios (
         'get',
-        `https://api.coingecko.com/api/v3/simple/price`,
+        'https://api.coingecko.com/api/v3/simple/price',
         {params: {
-          "ids": getCoinList(accounts).join(','),
-          "vs_currencies": 'usd'
+          'ids': getCoinList(accounts).join(','),
+          'vs_currencies': 'usd'
         }}
       ).then(response => {
-        console.info('gecko response', response.data.bitcoin.usd);
-      });
+        accounts.forEach(account => {
+          account.price = response.data[account.id].usd;
+        })
 
+      })
+      .catch(error=>{console.info('Got API error', error);});
+      
   }
 
 
@@ -142,7 +144,7 @@ function App() {
     const axiosParams = {
       method: method,
       url: url,
-      timeout: 15000,
+      timeout: 300,
       ...options
     };
    
@@ -163,10 +165,17 @@ function App() {
   
   return (
     <div className="App">
-      <header className="App-header">
 
-      {isLoggedIn && 'Estimate Component here'}
+      <header className="App-header">
+      {isLoggedIn && <Estimate
+        accounts={accounts}
+        password = {process.env.REACT_APP_PASSWORD}
+      ></Estimate>}
+
+
+
       </header>
+
          <Modal
           isOpen={! isLoggedIn}
           style={customStyles}
