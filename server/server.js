@@ -5,8 +5,16 @@ dotenv.config({ path: "./config.env" });
 
   const getData = () => {
     var productList = [];
-    for (let i = 0; i < 10; i++) {
-        productList.push({ Id: i + 1, Title: `Product ${i + 1}`, Price: Math.floor(Math.random() * 100000) + 5000 });
+
+    let isChange = false;
+    if (Math.floor(Math.random() * 3) === 0) {
+        console.info('DATA WILL CHANGE');
+        isChange = true;
+    }
+    for (let i = 0; i < 1; i++) {
+//        productList.push({ Id: i + 1, Title: `Product ${i + 1}`, Price: Math.floor(Math.random() * 100000) + 5000 });
+        productList.push({ Id: i + 1, Title: `Product ${i + 1}`, Price: (isChange ? Math.floor(Math.random() * 100000) + 5000 : 10.00) });
+
     }
     return productList;
 }
@@ -36,7 +44,7 @@ app.get("/stream", (req, res) => {
   let eventInterval = setInterval(() => {
     res.write(`event: message\n`);
     res.write(`data: ${JSON.stringify(getData())}\n\n`);
-  }, 2000);
+  }, 5000);
 
   req.on("close", (err) => {
     clearInterval(eventInterval);

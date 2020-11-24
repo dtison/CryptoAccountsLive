@@ -1,7 +1,8 @@
 import './App.css';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import DeepEqual from 'deep-equal';
 
 const CryptoJS = require('crypto-js');
 
@@ -29,16 +30,37 @@ function decryptWithAES (text, passphrase) {
   return originalText;
 };
 
-
-
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [sseData, setSSEData] = useState([]);
+  const sseDataRef = useRef(null);
 
   useEffect(_ => {
+    sseDataRef.current = sseData;
     const eventSource = new EventSource("http://localhost:8000/stream");
-    eventSource.onmessage = e => console.info(JSON.parse(e.data));
+    eventSource.onmessage = e => {
+      const data = JSON.parse(e.data);
+      if (sseDataRef.current.length === 0) {
+        sseDataRef.current = data;
+      }
+      console.info(`Comparing ${JSON.stringify(sseDataRef.current)} ${JSON.stringify(data)}`);
+      if (! DeepEqual(sseDataRef.current, data)) {
+        console.info('New SSE Data received', data);
+        setSSEData(data);
+      }
+   //   console.info(JSON.parse(e.data)); 
+    
+    }
   }, []);
+
+
+  useEffect(_ => {
+    console.info('It looks like the sseData updated');
+  }, [sseData]);
+
+
+
 
   const accounts = [
     {
@@ -126,9 +148,9 @@ function App() {
     setIsLoggedIn(true);
   }
 
-  console.info('Isloggedin', isLoggedIn);
+ // console.info('Isloggedin', isLoggedIn);
   
-  setTimeout(_=>{
+/*   setTimeout(_=>{
     console.info('Displaying it all');
     axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC&CMC_PRO_API_KEY=f1920a9b-6a47-4217-85ff-1f9cae952027')
       .then(response => {
@@ -148,7 +170,8 @@ function App() {
      // console.info(`${coin.name} ${decryptWithAES(coin.value, passwd)}`));
     });
   }, 1000);
-
+ */
+  
   return (
     <div className="App">
       <header className="App-header">
