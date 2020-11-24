@@ -104,11 +104,11 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accounts, setAccounts] = useState(accountsData);
-  const sseDataRef = useRef(null);
+ 
 
   useEffect(_ => {
     updatePrices();
-    setInterval(updatePrices, 20000);
+    setInterval(updatePrices, 45000);
   }, []);
  
 
@@ -129,11 +129,11 @@ function App() {
           'vs_currencies': 'usd'
         }}
       ).then(response => {
-        const newAccounts = accounts;
-        newAccounts.forEach(account => {
+        console.info('accounts', JSON.stringify(accounts));
+        setAccounts(accounts.map(account => {
           account.price = response.data[account.id].usd;
-        });
-        setAccounts(newAccounts);
+          return account;
+        }));
 
       })
       .catch(error=>{console.info('Got API error', error);});
@@ -173,8 +173,6 @@ function App() {
         accounts={accounts}
         password = {process.env.REACT_APP_PASSWORD}
       ></Estimate>}
-
-
 
       </header>
 
