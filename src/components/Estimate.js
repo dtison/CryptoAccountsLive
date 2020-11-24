@@ -15,12 +15,12 @@ console.info('accounts len is', props.accounts.length);
       const value = parseFloat(AES.decryptFromBase64(account.type, props.password));
 
       return (
-      <div key={index} className="w-1/4 overflow-hidden">
+      <div key={index} className="w-1/3 overflow-hidden">
       {account.name} ${(value * account.price).toLocaleString('en-US', {maximumFractionDigits:2})}
       </div>  );  
     })}
 
-    <div className="w-1/4 overflow-hidden">
+    <div className="w-1/3 overflow-hidden">
      Total ${
       props.accounts.reduce((acc,curr) => {
         const value = parseFloat(AES.decryptFromBase64(curr.type, props.password));
@@ -34,4 +34,4 @@ console.info('accounts len is', props.accounts.length);
 };
 
 export default Estimate;
- 
+ // ${account.price.toLocaleString('en-US', {maximumFractionDigits:2})} 
