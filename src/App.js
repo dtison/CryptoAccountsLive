@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 
 import DeepEqual from 'deep-equal';
 import AES from './lib/AES';
+import axios from 'axios';
 
 const customStyles = {
   content : {
@@ -18,6 +19,86 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
+const accounts = [
+  {
+    name: 'BTC',
+    id: 'bitcoin',
+    type: 'VTJGc2RHVmtYMThiYmF5QWtFMzYraDR2RmxUbnpnOWpIUWdVZnZVNk1jRT0='
+  },
+  {
+    name: 'Tiferet DGB',
+    id: 'digibyte',
+    type: 'VTJGc2RHVmtYMThIdHZFRmlZd1MyS0UyekQ0Uk5lZFVzSExZamhacE1Xaz0='
+  },
+  {
+    name: 'Tiferet XMR',
+    id: 'monero',
+    type: 'VTJGc2RHVmtYMTlUYUFBMGxMVnJEWEkzamZESk16TVlVK0RheWFUdHVqZz0='
+  },
+  {
+    name: 'Tiferet LTC',
+    id: 'litecoin',
+    type: 'VTJGc2RHVmtYMThuck91QVRXdks1UHQ2NUlqSWxtM3RBSzArNkxFUSs4UT0='
+  },
+
+  {
+    name: 'Tiferet ETH',
+    id: 'ethereum',
+    type: 'VTJGc2RHVmtYMThyaWU3VVVWcHZ3dlBONXNLZkRTL0dFcjRIWFlwYi9iND0='
+  },
+  {
+    name: 'Tiferet BCH',
+    id: 'bitcoin-cash',
+    type: 'VTJGc2RHVmtYMSszQTZ5WENWNU9aOE9DT1FkOHdnQTBmOEJVWWhMQisrbz0='
+  },
+  {
+    name: 'Tiferet BSV',
+    id: 'bitcoin-cash-sv',
+    type: 'VTJGc2RHVmtYMSszQTZ5WENWNU9aOE9DT1FkOHdnQTBmOEJVWWhMQisrbz0='
+  },
+  {
+    name: 'EOS',
+    id: 'eos',
+    type: 'VTJGc2RHVmtYMS9JM0RIcVZweElyZU5WSlBUeGxKb0g4Z21iMWRQbFg0dz0='
+  },   
+  {
+    name: 'OMG',
+    id: 'omisego',
+    type: 'VTJGc2RHVmtYMTh3YnNEWEl5ZXhjNWJ6eDJmYXQzU3NrZWVHM1BmZE5wdz0='
+  },   
+  // Todo: Add BAT, ANT GNT, BTG
+  {
+    name: 'LTC Dtison II',
+    id: 'litecoin',
+    type: 'VTJGc2RHVmtYMS9NUEpMTEFKTUUvMG0zSG9qZlY5Q0ZuRkUzWVJHeUtobz0='
+  },    
+  {
+    name: 'BCH Dtison II',
+    id: 'bitcoin-cash',
+    type: 'VTJGc2RHVmtYMTg5NzIraGl5OFdOd2l3eU5VSEVIRVBCZHhQVTNFeEl0UT0='
+  },   
+  {
+    name: 'BSV Dtison II',
+    id: 'bitcoin-cash-sv',
+    type: 'VTJGc2RHVmtYMTg5NzIraGl5OFdOd2l3eU5VSEVIRVBCZHhQVTNFeEl0UT0='
+  },   
+  {
+    name: 'ETH Dtison III',
+    id: 'ethereum',
+    type: 'VTJGc2RHVmtYMTh0aG8xcjczekZoeHFqZlhEZzhFci9oMDVwR1FZRjFHaz0='
+  },  
+  {
+    name: 'NMR Dtison III',
+    id: 'numeraire',
+    type: 'VTJGc2RHVmtYMTl4cS90clVwMDhwUUtRUENiQjBFZlVMU0t6OGZwK2dTYz0='
+  },  
+  {
+    name: 'XMR',
+    id: 'monero',
+    type: 'VTJGc2RHVmtYMThKeDZXNHArK2pYcmxMNzFKVE5EUlNnQnZWRjFWcGxzcz0='
+  },  
+
+];
 
 
 function App() {
@@ -27,30 +108,48 @@ function App() {
   const sseDataRef = useRef(null);
 
   useEffect(_ => {
-    sseDataRef.current = sseData;
-    const eventSource = new EventSource("http://localhost:8000/stream");
-    eventSource.onmessage = message => {
-      const data = JSON.parse(message.data);
-      if (sseDataRef.current.length === 0) {
-        sseDataRef.current = data;
-      }
-      console.info(`Comparing ${JSON.stringify(sseDataRef.current)} ${JSON.stringify(data)}`);
-      if (! DeepEqual(sseDataRef.current, data)) {
-        console.info('New SSE Data received', data);
-        setSSEData(data);
-      }
-   //   console.info(JSON.parse(e.data)); 
-    
-    }
+      updatePrices();
+          // setInterval() for every 10 secs??
+
   }, []);
+ 
+
+  function updatePrices() {
+      function getCoinList(accounts) {
+        const ids = new Set();
+        return Array.from (accounts.reduce((acc,curr) => {
+          acc.add(curr.id);
+          return acc;
+        }, ids));
+      }
+  
+      urlWithAxios (
+        'get',
+        `https://api.coingecko.com/api/v3/simple/price`,
+        {params: {
+          "ids": getCoinList(accounts).join(','),
+          "vs_currencies": 'usd'
+        }}
+      ).then(response => {
+        console.info('gecko response', response.data.bitcoin.usd);
+      });
+
+  }
 
 
-  useEffect(_ => {
-    console.info('It looks like state sseData has updated');
-  }, [sseData]);
+  function urlWithAxios(method, url, options = {}) {
 
-
-
+    const axiosParams = {
+      method: method,
+      url: url,
+      timeout: 15000,
+      ...options
+    };
+   
+    console.info('urlWithAxios axiosParams', axiosParams);
+  
+    return axios(axiosParams);
+  }
 
 
 
