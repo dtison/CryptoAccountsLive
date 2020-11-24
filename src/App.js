@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 
@@ -35,7 +35,10 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
+  useEffect(_ => {
+    const eventSource = new EventSource("http://localhost:8000/stream");
+    eventSource.onmessage = e => console.info(JSON.parse(e.data));
+  }, []);
 
   const accounts = [
     {
