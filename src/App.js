@@ -16,9 +16,7 @@ const customStyles = {
   }
 };
 
-Modal.setAppElement('#root')
-
-
+Modal.setAppElement('#root');
 
 function App() {
 
