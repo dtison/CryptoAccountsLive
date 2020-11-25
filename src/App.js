@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect /*, useRef */} from 'react';
 import Modal from 'react-modal';
 import AES from './lib/AES';
 import axios from 'axios';
@@ -23,6 +23,11 @@ const accountsData = [
     name: 'BTC',
     id: 'bitcoin',
     type: 'VTJGc2RHVmtYMThiYmF5QWtFMzYraDR2RmxUbnpnOWpIUWdVZnZVNk1jRT0='
+  },
+  {
+    name: 'LTC',
+    id: 'litecoin',
+    type: 'VTJGc2RHVmtYMStYRnhYSC9BTEV3TC9NbitEMmR0VE1VdVUrM3FmVWtOcz0='
   },
   {
     name: 'Tiferet DGB',
@@ -129,7 +134,7 @@ function App() {
           'vs_currencies': 'usd'
         }}
       ).then(response => {
-        console.info('accounts', JSON.stringify(accounts));
+        console.info('Updating endpoint data');
         setAccounts(accounts.map(account => {
           account.price = response.data[account.id].usd;
           return account;
@@ -185,12 +190,9 @@ function App() {
           <h2
             onClick={e=>{
               const passwd = process.env.REACT_APP_PASSWORD;
-// TODO:  Loop thru SSE data?
-   //           accounts.forEach(coin=>console.info(`${coin.name} ${AES.decryptFromBase64(coin.value, passwd)}`));
-
-              const enc = AES.encryptToBase64('0.0', passwd);
+              const enc = AES.encryptToBase64('1.0', passwd);
               const dec = AES.decryptFromBase64(enc, passwd);
-              console.info('enc1', enc, 'latest v', dec);
+              console.info('base 64 value', enc, 'numeric', dec);
             }}
           >
             Login
@@ -210,28 +212,3 @@ function App() {
 }
 
 export default App;
-/* 
-         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>   */
-
-
-
-          /*         onAfterOpen={_=>{
-            console.info('onAfterOpen Setting LoggedIn = true');
-            setIsLoggedIn(true);
-          }} */
-       //   onRequestClose={closeLoginModal}
-
-                   //ref={_subtitle => (subtitle = _subtitle)}  
-
-                   //https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC&CMC_PRO_API_KEY=f1920a9b-6a47-4217-85ff-1f9cae952027

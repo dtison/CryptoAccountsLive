@@ -1,11 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { /* useState, useContext, useEffect */ } from 'react';
 import AES from '../lib/AES';
 
 const Estimate = props => {
- 
- // const [schemeElement, setSchemeElement] = useState(RegistrationScheme.getNullElement());
-console.info('accounts len is', props.accounts.length);
- // useEffect(RegistrationScheme.getRegistrationEffect(context, setSchemeElement), []);
+
   return (
     <>
     Accounts
@@ -27,8 +24,11 @@ console.info('accounts len is', props.accounts.length);
           return acc + (value * curr.price);
       }, 0).toLocaleString('en-US', {maximumFractionDigits:2})
     }
+  </div>
+ 
+ 
     </div> 
-    </div>
+    
     </>
   );
 };
