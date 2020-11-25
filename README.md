@@ -1,6 +1,6 @@
 # Crypto Accounts Live
 
-*Blockchain Assets Portfolio Live Values*
+*Displays current live values of your crypto assets.*
 
 Some of you have either mined or bought cryptos and stored them into multiple wallets. 
 Most wallets and exchanges will show you the total value of your portfolio.
