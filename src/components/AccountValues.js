@@ -1,11 +1,11 @@
 import React, { /* useState, useContext, useEffect */ } from 'react';
 import AES from '../lib/AES';
 
-const Estimate = props => {
+const AccountValues = props => {
 
   return (
     <>
-    Accounts
+    CryptoCurrency Values
 
     <div className="flex flex-wrap overflow-hidden">
     {props.accounts.map((account, index) => {
@@ -32,7 +32,7 @@ const Estimate = props => {
   );
 };
 
-export default Estimate;
+export default AccountValues;
  // ${account.price.toLocaleString('en-US', {maximumFractionDigits:2})} 
 
  //const value = parseFloat(AES.decryptFromBase64(curr.type, props.password));

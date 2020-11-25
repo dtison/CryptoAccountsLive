@@ -3,7 +3,7 @@ import React, {useState, useEffect /*, useRef */} from 'react';
 import Modal from 'react-modal';
 import AES from './lib/AES';
 import axios from 'axios';
-import Estimate from './components/Estimate';
+import AccountValues from './components/AccountValues';
 import ActiveAccounts from './accounts/ActiveAccounts';
 
 const customStyles = {
@@ -90,10 +90,10 @@ function App() {
     <div className="App">
 
       <header className="App-header">
-      {isLoggedIn && <Estimate
+      {isLoggedIn && <AccountValues
         accounts={accounts}
         password = {process.env.REACT_APP_PASSWORD}
-      ></Estimate>}
+      ></AccountValues>}
 
       </header>
 
