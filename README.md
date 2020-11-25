@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# Crypto Accounts Live
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+*Displays current live values of your crypto assets.*
 
-## Available Scripts
+Some of you have either mined or bought cryptos and stored them into multiple wallets. 
+Most wallets and exchanges will show you the total value of your portfolio.
+If you want to see the current market value of all your assets using live market data, this application is for you.  
 
-In the project directory, you can run:
+![Portfolio](https://user-images.githubusercontent.com/1645537/100275428-e5c72700-2f2d-11eb-8230-83ae6bb1ed3c.png)  
 
-### `yarn start`
+### How to Use
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This is a React.js app.  
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Basic steps are
 
-### `yarn test`
+Clone repo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```CryptoAccountsLive
+npm install
+npm start
+```
+### Configuration ###
 
-### `yarn build`
+You have to initialize your data.  To do this, copy or rename the file
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+src/accounts/ActiveAccounts.example.js 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+to 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+src/accounts/ActiveAccounts.js 
 
-### `yarn eject`
+and edit contents according to your needs.  
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+You can look in the file coingecko-all.txt to find the *id* value for whatever coin you want.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You add as few or as many records as you want displayed.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Some Examples:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You have 0.255 BTC, 1.0 ETH and 2.5 LTC
 
-## Learn More
+```
+const activeAccounts = [
+  {
+    name: 'BTC',
+    id: 'bitcoin',
+    qty: 0.255
+  },
+  {
+    name: 'ETH',
+    id: 'ethereum',
+    qty: 1.0
+  },
+  {
+    name: 'LTC',
+    id: 'litecoin',
+    qty: 2.5
+  },
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+];
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You have 4,400 Cardano (ADA) and 300 EOS
 
-### Code Splitting
+```
+const activeAccounts = [
+  {
+    name: 'Cardano (ADA)',
+    id: 'ada',
+    qty: 4400
+  },
+  {
+    name: 'EOS',
+    id: 'eos',
+    qty: 300
+  },
+];
+```
+### TODO's & Contributing ###
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+I just started this application.
 
-### Analyzing the Bundle Size
+There are a lot of things left to do.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Formatting / CSS  If you are good with this you are welcome to work on styling.  I chose tailwind because I don't like bootstrap.
 
-### Making a Progressive Web App
+Setting for API refresh interval.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Thanks ###
+Special thanks to
 
-### Deployment
+https://www.coingecko.com/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+for providing a nice, free REST API.  
 
-### `yarn build` fails to minify
+More details at
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://www.coingecko.com/en/api
