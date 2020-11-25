@@ -1,7 +1,6 @@
 import './App.css';
 import React, {useState, useEffect /*, useRef */} from 'react';
 import Modal from 'react-modal';
-import AES from './lib/AES';
 import axios from 'axios';
 import AccountValues from './components/AccountValues';
 import ActiveAccounts from './accounts/ActiveAccounts';
@@ -23,7 +22,6 @@ Modal.setAppElement('#root')
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accounts, setAccounts] = useState(ActiveAccounts);
  
 
@@ -77,50 +75,18 @@ function App() {
   }
 
 
-
-  function closeLoginModal() {
-    console.info('closeLoginModal()');
-    setIsLoggedIn(true);
-  }
-
- // console.info('Isloggedin', isLoggedIn);
-
+ 
   
   return (
     <div className="App">
 
       <header className="App-header">
-      {isLoggedIn && <AccountValues
+      <AccountValues
         accounts={accounts}
-        password = {process.env.REACT_APP_PASSWORD}
-      ></AccountValues>}
+      > 
+      </AccountValues>
 
       </header>
-
-         <Modal
-          isOpen={! isLoggedIn}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
- 
-          <h2
-            onClick={e=>{
-              const passwd = process.env.REACT_APP_PASSWORD;
-              const enc = AES.encryptToBase64('1.0', passwd);
-              const dec = AES.decryptFromBase64(enc, passwd);
-              console.info('base 64 value', enc, 'numeric', dec);
-            }}
-          >
-            Login
-          </h2>
- 
-          <form>
-            <input />
- 
-            <button onClick={closeLoginModal}>Login</button>
-
-          </form>
-        </Modal> 
 
 
     </div>
