@@ -25,3 +25,5 @@ yarn-error.log*
 
 .eslintcache
 server/node_modules
+src/accounts/*
+!src/accounts/ActiveAccounts.example.js
