@@ -4,14 +4,17 @@ const AccountValues = props => {
 
   return (
     <>
-    CryptoCurrency Values
+    <p>
+      My Portfolio Market Values
+    </p>
+
 
     <div className="flex flex-wrap overflow-hidden">
     {props.accounts.map((account, index) => {
 
       return (
       <div key={index} className="w-1/3 overflow-hidden">
-      {account.name} ${(account.qty * account.price).toLocaleString('en-US', {maximumFractionDigits:2})}
+    {account.qty} {account.name} ${(account.qty * account.price).toLocaleString('en-US', {maximumFractionDigits:2})}
       </div>  );  
     })}
 

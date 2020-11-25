@@ -2,30 +2,28 @@ const activeAccounts = [
   {
     name: 'BTC',
     id: 'bitcoin',
-    qty: 1
+    qty: 0.25
   },
   {
     name: 'LTC',
     id: 'litecoin',
-    qty: 1
+    qty: 10.02
   },
   {
     name: 'BCH',
     id: 'bitcoin-cash',
-    qty: 1
+    qty: 5.22
   },
   {
     name: 'BSV',
     id: 'bitcoin-cash-sv',
-    qty: 1
+    qty: 0.59
   },
   {
     name: 'ETH',
     id: 'ethereum',
-    qty: 1
+    qty: 1.0
   },
-
-
 
 ];
 
