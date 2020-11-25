@@ -77,7 +77,19 @@ const activeAccounts = [
   },
 ];
 ```
-## Thanks ##
+### TODO's & Contributing ###
+
+I just started this application.
+
+There are a lot of things left to do.
+
+Formatting / CSS  If you are good with this you are welcome to work on styling.  I chose tailwind because I don't like bootstrap.
+
+Setting for API refresh interval.
+
+
+
+### Thanks ###
 Special thanks to
 
 https://www.coingecko.com/
