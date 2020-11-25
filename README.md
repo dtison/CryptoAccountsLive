@@ -1,16 +1,28 @@
 # Crypto Accounts Live
 
-Blockchain Assets Portfolio Live Values
+*Blockchain Assets Portfolio Live Values*
 
-Some of you have mined or bought cryptos and stored them into multiple wallets. If that applies to you and you want to see an overview of your investment, this application is for you.  
+Some of you have either mined or bought cryptos and stored them into multiple wallets. 
+Most wallets and exchanges will show you the total value of your portfolio.
+If you want to see the current market value of all your assets using live market data, this application is for you.  
 
-PICTURE
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Portfolio](https://user-images.githubusercontent.com/1645537/100275428-e5c72700-2f2d-11eb-8230-83ae6bb1ed3c.png)  
 
 ### How to Use
 
-To use this all you have to do is copy or rename the file
+This is a React.js app.  
+
+Basic steps are
+
+Clone repo
+
+```CryptoAccountsLive
+npm install
+npm start
+```
+### Configuration ###
+
+You have to initialize your data.  To do this, copy or rename the file
 
 src/accounts/ActiveAccounts.example.js 
 
@@ -18,7 +30,7 @@ to
 
 src/accounts/ActiveAccounts.js 
 
-and edit according to your needs.  
+and edit contents according to your needs.  
 
 You can look in the file coingecko-all.txt to find the *id* value for whatever coin you want.
 
@@ -49,7 +61,6 @@ const activeAccounts = [
 ];
 ```
 
-
 You have 4,400 Cardano (ADA) and 300 EOS
 
 ```
@@ -66,6 +77,13 @@ const activeAccounts = [
   },
 ];
 ```
-More
+## Thanks ##
+Special thanks to
 
+https://www.coingecko.com/
 
+for providing a nice, free REST API.  
+
+More details at
+
+https://www.coingecko.com/en/api
