@@ -77,6 +77,24 @@ const activeAccounts = [
   },
 ];
 ```
+
+### Setting up Environment ###
+
+If you want to use https, create a .env.local file
+
+```
+HTTPS=true 
+SSL_CRT_FILE=.cert/server.crt 
+SSL_KEY_FILE=.cert/server.key
+```
+You can use the included bash script
+
+generate-ssl-cert.sh
+
+to generate a selfsigned TLS cert to run on localhost.
+
+
+
 ### TODO's & Contributing ###
 
 I just started this application.
