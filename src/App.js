@@ -1,28 +1,14 @@
 import './App.css';
 import React, {useState, useEffect /*, useRef */} from 'react';
-import Modal from 'react-modal';
 import axios from 'axios';
 import AccountValues from './components/AccountValues';
 import ActiveAccounts from './accounts/ActiveAccounts';
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
-Modal.setAppElement('#root');
 
 function App() {
 
   const [accounts, setAccounts] = useState(ActiveAccounts);
  
-
   useEffect(_ => {
     updatePrices();
     setInterval(updatePrices, 45000);
@@ -72,8 +58,6 @@ function App() {
     return axios(axiosParams);
   }
 
-
- 
   
   return (
     <div className="App">
