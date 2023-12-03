@@ -1,4 +1,5 @@
 import React, { /* useState, useContext, useEffect */ } from 'react';
+import GroupTotal from './GroupTotal';
 
 const AccountValues = props => {
 
@@ -14,18 +15,26 @@ const AccountValues = props => {
 
       return (
       <div key={index} className="w-1/3 overflow-hidden">
-    {account.qty} {account.name} ${(account.qty * account.price).toLocaleString('en-US', {maximumFractionDigits:2})}
+      {account.qty} {account.name} ${(account.qty * account.price).toLocaleString('en-US', {maximumFractionDigits:2})}
       </div>  );  
     })}
+
+
+    <GroupTotal 
+      accounts={props.accounts}
+      name="Tiferet"
+      group={1}
+    >
+
+    </GroupTotal>
 
     <div className="w-1/3 overflow-hidden">
      Total ${
       props.accounts.reduce((acc,curr) => {
-
           return acc + (curr.qty * curr.price);
       }, 0).toLocaleString('en-US', {maximumFractionDigits:2})
     }
-  </div>
+    </div>
  
  
     </div> 

@@ -12,6 +12,7 @@ function App() {
   useEffect(_ => {
     updatePrices();
     setInterval(updatePrices, 45000);
+    // eslint-disable-next-line
   }, []);
  
 
@@ -32,8 +33,10 @@ function App() {
           'vs_currencies': 'usd'
         }}
       ).then(response => {
-        console.info('Updating endpoint data');
         setAccounts(accounts.map(account => {
+          if (['bitcoin', 'litecoin', 'digibyte', 'monero', 'bitcoin-gold', 'bitcoin-diamond'].includes(account.id)) {
+            console.info(`${account.id} current $${response.data[account.id].usd}`);
+          }
           account.price = response.data[account.id].usd;
           return account;
         }));
@@ -49,7 +52,7 @@ function App() {
     const axiosParams = {
       method: method,
       url: url,
-      timeout: 300,
+      timeout: 500,
       ...options
     };
    
